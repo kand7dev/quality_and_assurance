@@ -36,9 +36,9 @@ public class HRLib
         int key = 5;
         EncryptedPW = Encipher(Password, key);
     }
-    public static void CheckPhone(string Phone, ref int TypePhone, ref string? InfoPhone)
+    public static void CheckPhone(string Phone, ref int TypePhone, ref string InfoPhone)
     {
-        if (Phone.Length > 10)
+        if (Phone.Length > 10 || Phone.Any(c => char.IsLetter(c)))
         {
             TypePhone = -1;
             InfoPhone = null;
