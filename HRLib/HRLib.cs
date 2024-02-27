@@ -1,11 +1,25 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-public class HRLib
+public static class HRLib
 {
+    public struct Employee
+    {
+        public string Name { get; }
+        public string HomePhone { get; }
+        public string MobilePhone { get; }
+        public DateTime Birthday { get; }
+        public DateTime HiringDate { get; }
+        public Employee(string name, string homePhone, string mobilePhone, DateTime birthday, DateTime hiringDate)
+        {
+            Name = name;
+            HomePhone = homePhone;
+            MobilePhone = mobilePhone;
+            Birthday = birthday;
+            HiringDate = hiringDate;
+        }
+    }
     public static void Echo()
     {
         Console.WriteLine("You're calling this class!");
