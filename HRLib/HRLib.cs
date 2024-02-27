@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,5 +24,25 @@ public class HRLib
             }
         }
         return true;
+    }
+    public static bool ValidPassword(string Password)
+    {
+        if (Password.Length < 12) return false; // προυπόθεση α.
+        if (!char.IsUpper(Password, 0) || !char.IsDigit(Password, Password.Length - 1)) return false; // προυπόθεση δ.
+        return (Password.Any(c => IsLetter(c)) && Password.Any(c => IsDigit(c)) && Password.Any(c => IsSymbol(c))); // προυποθέσεις β,γ.
+    }
+
+    // Helper functions for ValidPassword.
+    private static bool IsLetter(char character)
+    {
+        return (character >= 'a' && character <= 'z') || (character >= 'A' && character <= 'Z');
+    }
+    private static bool IsDigit(char character)
+    {
+        return (character >= '0' && character <= '9');
+    }
+    private static bool IsSymbol(char character)
+    {
+        return (character > 32 && character < 127 && !IsDigit(character) && !IsLetter(character));
     }
 }
