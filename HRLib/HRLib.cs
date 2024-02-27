@@ -107,7 +107,19 @@ public static class HRLib
             --Age;
         }
     }
-
+    public static int LiveInAthens(Employee[] Empls)
+    {
+        int employeeCount = 0;
+        foreach (Employee emp in Empls)
+        {
+            int typePhone = 0;
+            string phoneInfo = string.Empty;
+            CheckPhone(emp.HomePhone, ref typePhone, ref phoneInfo);
+            if (phoneInfo == null) continue;
+            if (phoneInfo.Contains("Αθήνας")) employeeCount++;
+        }
+        return employeeCount;
+    }
     // Helper functions for ValidPassword.
     private static bool IsLetter(char character)
     {
