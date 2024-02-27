@@ -97,6 +97,16 @@ public static class HRLib
             InfoPhone = null;
         }
     }
+    public static void InfoEmployee(Employee EmpIX, ref int Age, ref int YearsOfExperience)
+    {
+        DateTime today = DateTime.Today;
+        Age = today.Year - EmpIX.Birthday.Year;
+        YearsOfExperience = today.Year - EmpIX.HiringDate.Year;
+        if (EmpIX.Birthday.Date > today.AddYears(-Age))
+        {
+            --Age;
+        }
+    }
 
     // Helper functions for ValidPassword.
     private static bool IsLetter(char character)
