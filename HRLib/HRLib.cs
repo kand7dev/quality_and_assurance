@@ -65,7 +65,7 @@ namespace QualityAndAssurance.HRLib
         }
         public static void CheckPhone(string Phone, ref int TypePhone, ref string InfoPhone)
         {
-            if (Phone.Length > 10 || Phone.Any(c => char.IsLetter(c)))
+            if (Phone.Length != 10 || Phone.Any(c => char.IsLetter(c)))
             {
                 TypePhone = -1;
                 InfoPhone = null;
@@ -113,7 +113,7 @@ namespace QualityAndAssurance.HRLib
         public static void InfoEmployee(Employee EmpIX, ref int Age, ref int YearsOfExperience)
         {
             DateTime today = DateTime.Today;
-            if (today < EmpIX.HiringDate)
+            if (EmpIX.Birthday.Year >= today.Year)
             {
                 Age = -1;
                 YearsOfExperience = -1;
@@ -130,15 +130,21 @@ namespace QualityAndAssurance.HRLib
                 YearsOfExperience = -1;
                 return;
             }
+            if (today < EmpIX.HiringDate)
+            {
+                YearsOfExperience = -1;
+                Age = -1;
+                return;
+            }
             if (EmpIX.HiringDate.Year >= today.Year - (Age - 18))
             {
                 YearsOfExperience = today.Year - EmpIX.HiringDate.Year;
-                return;
             }
-            Age = -1;
-            YearsOfExperience = -1;
-
-
+            else
+            {
+                Age = -1;
+                YearsOfExperience = -1;
+            }
         }
         public static int LiveInAthens(Employee[] Empls)
         {
