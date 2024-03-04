@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
 
 namespace QualityAndAssurance.HRLib
 {
@@ -23,16 +22,12 @@ namespace QualityAndAssurance.HRLib
                 HiringDate = hiringDate;
             }
         }
-        public static void Echo()
-        {
-            Console.WriteLine("You're calling this class!");
-        }
         public static bool ValidName(string Name)
         {
             if (string.IsNullOrWhiteSpace(Name)) return false;
             Name = Name.Trim();
             string[] employeeNameAndSurname = Name.Split(' ');
-            if (employeeNameAndSurname.Length != 2) return false;
+             if (employeeNameAndSurname.Length != 2) return false; // Comment this to break this method
             foreach (string name in employeeNameAndSurname)
             {
                 foreach (char character in name)
@@ -47,9 +42,9 @@ namespace QualityAndAssurance.HRLib
         }
         public static bool ValidPassword(string Password)
         {
-            if (Password.Length < 12) return false; // προυπόθεση α.
-            if (!char.IsUpper(Password, 0) || !char.IsDigit(Password, Password.Length - 1)) return false; // προυπόθεση δ.
-            if (!Password.All(c => IsLetter(c) || IsDigit(c) || IsSymbol(c))) return false;
+            if (Password.Length < 12) return false; 
+            if (!char.IsUpper(Password, 0) || !char.IsDigit(Password, Password.Length - 1)) return false;
+            if (!Password.All(c => IsLetter(c) || IsDigit(c) || IsSymbol(c))) return false; //Comment this to break this method
 
             return (Password.Any(c => IsLetter(c)) && Password.Any(c => IsDigit(c)) && Password.Any(c => IsSymbol(c)));
 
@@ -65,7 +60,7 @@ namespace QualityAndAssurance.HRLib
         }
         public static void CheckPhone(string Phone, ref int TypePhone, ref string InfoPhone)
         {
-            if (Phone.Length != 10 || Phone.Any(c => char.IsLetter(c)))
+            if (Phone.Length != 10 || Phone.Any(c => char.IsLetter(c))) // Comment the right side of || to break this method
             {
                 TypePhone = -1;
                 InfoPhone = null;
@@ -92,7 +87,7 @@ namespace QualityAndAssurance.HRLib
             { "27", "Ανατολική Πελοπόννησος, Κύθηρα" },
             { "28", "Κρήτη" }
         };
-            string firstThreeDigits = Phone.Substring(0, 3); // or string firstThreeDigits = Phone[0..3]; which works only on C# 8.0
+            string firstThreeDigits = Phone.Substring(0, 3); 
             string firstTwoDigits = Phone.Substring(0, 2);
             if (cellphoneDict.ContainsKey(firstThreeDigits))
             {
@@ -136,15 +131,15 @@ namespace QualityAndAssurance.HRLib
                 Age = -1;
                 return;
             }
-            if (EmpIX.HiringDate.Year >= today.Year - (Age - 18))
-            {
-                YearsOfExperience = today.Year - EmpIX.HiringDate.Year;
-            }
-            else
-            {
-                Age = -1;
-                YearsOfExperience = -1;
-            }
+            if (EmpIX.HiringDate.Year >= today.Year - (Age - 18))           //Comment this to break this method
+            {                                                               //Comment this to break this method
+                YearsOfExperience = today.Year - EmpIX.HiringDate.Year;     //Comment this to break this method
+            }                                                               //Comment this to break this method
+            else                                                            //Comment this to break this method
+            {                                                               //Comment this to break this method
+                Age = -1;                                                   //Comment this to break this method
+                YearsOfExperience = -1;                                     //Comment this to break this method
+            }                                                               //Comment this to break this method
         }
         public static int LiveInAthens(Employee[] Empls)
         {
@@ -155,7 +150,7 @@ namespace QualityAndAssurance.HRLib
                 string phoneInfo = string.Empty;
                 CheckPhone(emp.HomePhone, ref typePhone, ref phoneInfo);
                 if (phoneInfo == null) continue;
-                if (phoneInfo.Contains("Αθήνας")) employeeCount++;
+                if (phoneInfo.Contains("Αθήνας")) employeeCount++; // Comment this to break this method
             }
             return employeeCount;
         }
@@ -175,10 +170,9 @@ namespace QualityAndAssurance.HRLib
         // Helper functions for EncryptPassword.
         private static char Cipher(char ch, int key)
         {
-            if (!char.IsLetter(ch)) return ch; // if char is digit.
+            if (!char.IsLetter(ch)) return ch;
 
-            char offset = char.IsUpper(ch) ? 'A' : 'a'; // offest changes if char is upper or lower.
-
+            char offset = char.IsUpper(ch) ? 'A' : 'a';  // Comment this to break this method
             return (char)((((ch + key) - offset) % 26) + offset);
 
         }

@@ -263,24 +263,57 @@ namespace QualityAndAssurance.UnitTest
     {
         const string passwordMustBeValid = "Password must be greater or equal than 12. Start with an upper case letter and end with a number. " +
             "Contain only ASCII letters, no whitespaces, and combine letters, digits and symbols";
+        const string wrongEncryption = "Ceasars encryption returs a different result";
         [TestMethod]
         public void ValidPasswordForEncryption()
         {
             object[,] testCases =
             {
-            {1, "B4232sxge#!56#fgs531c5", "G4232xclj#!56#klx531h5", passwordMustBeValid },
+            {1, "B4232  sxge#!56#fgs531c5", null!, passwordMustBeValid },
             {2, "z321  3126gbt^&321523EG", null!, passwordMustBeValid },
-            {3, "907$%213vt432f321567321", null!, passwordMustBeValid },
-            {4, "ZZZ32!@3byy565f423@3", "EEE32!@3gdd565k423@3", passwordMustBeValid },
-            {5, "BnmhRgxEW3567@@31gbGHR4!@#5", "GsrmWlcJB3567@@31lgLMW4!@#5", passwordMustBeValid },
+            {3, "907$%21   3vt432f321567321", null!, passwordMustBeValid },
+            {4, "     337321", null!, passwordMustBeValid },
+            {5, "BnmhRgxEW3δδ3567@@31gbGHR4!@#5", null!, passwordMustBeValid },
             };
             bool failed = false;
             string? encryptedPW = string.Empty;
             for (int i = 0; i < testCases.GetLength(0); i++)
             {
+                HRLib.HRLib.EncryptPassword((string)testCases[i, 1], ref encryptedPW);
                 try
                 {
-                    HRLib.HRLib.EncryptPassword((string)testCases[i, 1], ref encryptedPW);
+                    Assert.AreEqual((string?)testCases[i, 2], encryptedPW);
+                }
+                catch (Exception ex)
+                {
+                    failed = true;
+                    Console.WriteLine($"ref encryptedPW\nFailed Test Case: {(int)testCases[i, 0]} \n \t Hint: {(string)testCases[i, 3]} \n \t Reason: {ex.Message}\n");
+                }
+            }
+            if (failed)
+            {
+                Assert.Fail();
+            }
+
+        }
+        [TestMethod]
+        public void EncryptedCorrectly()
+        {
+            object[,] testCases =
+            {
+            {1, "Bnm3215sdw3$5", "Gsr3215xib3$5", wrongEncryption },
+            {2, "Z321%32d44321312bt6", "E321%32i44321312gy6", wrongEncryption },
+            {3, "O3213@#dadw3312d!zc231pg3", "T3213@#ifib3312i!eh231ul3", wrongEncryption },
+            {4, "M321@#ax3321321dadfafardw3133", "R321@#fc3321321ifikfkfwib3133", wrongEncryption },
+            {5, "P3ccg^32131adasb432^#$#25", "U3hhl^32131fifxg432^#$#25", wrongEncryption },
+            };
+            bool failed = false;
+            string? encryptedPW = string.Empty;
+            for (int i = 0; i < testCases.GetLength(0); i++)
+            {
+                HRLib.HRLib.EncryptPassword((string)testCases[i, 1], ref encryptedPW);
+                try
+                {
                     Assert.AreEqual((string?)testCases[i, 2], encryptedPW);
                 }
                 catch (Exception ex)
@@ -361,17 +394,24 @@ namespace QualityAndAssurance.UnitTest
             string? InfoPhone = String.Empty;
             for (int i = 0; i < testCases.GetLength(0); i++)
             {
+                HRLib.HRLib.CheckPhone((string)testCases[i, 1], ref TypePhone, ref InfoPhone);
                 try
                 {
-                    HRLib.HRLib.CheckPhone((string)testCases[i, 1], ref TypePhone, ref InfoPhone);
                     Assert.AreEqual((int)testCases[i, 2], TypePhone);
+                }
+                catch (Exception ex)
+                {
+                    failed = true;
+                    Console.WriteLine($"ref TypePhone\nFailed Test Case: {(int)testCases[i, 0]} \n \t Hint: {(string)testCases[i, 4]} \n \t Reason: {ex.Message}\n");
+                }
+                try
+                {
                     Assert.AreEqual((string?)testCases[i, 3], InfoPhone);
                 }
                 catch (Exception ex)
                 {
                     failed = true;
-                    Console.WriteLine($"Failed Test Case: {(int)testCases[i, 0]} \n \t Hint: {(string)testCases[i, 4]} \n \t Reason: {ex.Message}\n");
-
+                    Console.WriteLine($"ref InfoPhone\nFailed Test Case: {(int)testCases[i, 0]} \n \t Hint: {(string)testCases[i, 4]} \n \t Reason: {ex.Message}\n");
                 }
             }
             if (failed)
@@ -401,16 +441,25 @@ namespace QualityAndAssurance.UnitTest
             string? InfoPhone = String.Empty;
             for (int i = 0; i < testCases.GetLength(0); i++)
             {
+                HRLib.HRLib.CheckPhone((string)testCases[i, 1], ref TypePhone, ref InfoPhone);
                 try
                 {
-                    HRLib.HRLib.CheckPhone((string)testCases[i, 1], ref TypePhone, ref InfoPhone);
                     Assert.AreEqual((int)testCases[i, 2], TypePhone);
+                }
+                catch (Exception ex)
+                {
+                    failed = true;
+                    Console.WriteLine($"ref TypePhone\nFailed Test Case: {(int)testCases[i, 0]} \n \t Hint: {(string)testCases[i, 4]} \n \t Reason: {ex.Message}\n");
+                }
+                try
+                {
                     Assert.AreEqual((string?)testCases[i, 3], InfoPhone);
                 }
                 catch (Exception ex)
                 {
                     failed = true;
-                    Console.WriteLine($"Failed Test Case: {(int)testCases[i, 0]} \n \t Hint: {(string)testCases[i, 4]} \n \t Reason: {ex.Message}\n");
+                    Console.WriteLine($"ref InfoPhone\nFailed Test Case: {(int)testCases[i, 0]} \n \t Hint: {(string)testCases[i, 4]} \n \t Reason: {ex.Message}\n");
+
 
                 }
             }
